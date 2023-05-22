@@ -5,27 +5,40 @@ import 'package:supaquiz/quiz/views/main_view.dart';
 import 'package:supaquiz/quiz/views/widgets/quiz_widget.dart';
 
 class SelectLevelView extends StatelessWidget {
-  const SelectLevelView({super.key});
+  const SelectLevelView();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BaseBackground(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.purple.shade700,
+        actions: [
+          IconButton(
+              iconSize: safeWidth * 0.07,
+              onPressed: () {},
+              icon: const Icon(Icons.account_circle_sharp))
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Select a game level",
-              textScaleFactor: 2,
+              "Let's Play",
+              textScaleFactor: 2.8,
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  levelContainer(Difficulty.easy),
-                  levelContainer(Difficulty.medium),
-                  levelContainer(Difficulty.hard),
+                  levelContainer(Difficulty.easy, context),
+                  levelContainer(Difficulty.medium, context),
+                  levelContainer(Difficulty.hard, context),
                 ],
               ),
             )
@@ -36,24 +49,28 @@ class SelectLevelView extends StatelessWidget {
   }
 }
 
-Widget levelContainer(Difficulty difficulty) => Padding(
-      padding: const EdgeInsets.all(9.0),
-      child: Container(
-        width: safeWidth * 0.9,
-        height: safeHeight * 0.075,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: difficulty.color),
-        child: GestureDetector(
-          onTap: () {},
+Widget levelContainer(Difficulty difficulty, BuildContext context) => Padding(
+    padding: const EdgeInsets.all(9.0),
+    child: Container(
+      width: safeWidth * 0.9,
+      height: safeHeight * 0.09,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: difficulty.secColor),
+      child: GestureDetector(
+        onTap: () => Navigator.of(context).pushNamed(difficulty.name),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                difficulty.name.toUpperCase(),
-                textScaleFactor: 1.5,
-              ),
+            child: Text(
+              textAlign: TextAlign.left,
+              difficulty.name.toUpperCase(),
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Minecraft',
+                  fontWeight: FontWeight.bold),
+              textScaleFactor: 2,
             ),
           ),
         ),
       ),
-    );
+    ));

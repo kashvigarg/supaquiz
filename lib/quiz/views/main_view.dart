@@ -11,28 +11,30 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: BaseBackground(
-              child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const Text(
-            "SUPABASE",
-            textScaleFactor: 4,
-            style: TextStyle(color: Colors.white, fontFamily: 'Minecraft'),
-          ),
-          Column(
-            children: [
-              loginContainer("LOGIN/REGISTER"),
-              loginContainer("GUEST PLAYER"),
-            ],
-          )
-        ],
-      ))),
+          body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const Text(
+              "SUPABASE",
+              textScaleFactor: 4,
+              style: TextStyle(color: Colors.white, fontFamily: 'Minecraft'),
+            ),
+            Column(
+              children: [
+                loginContainer("LOGIN/REGISTER", false, context),
+                loginContainer("GUEST PLAYER", true, context),
+              ],
+            )
+          ],
+        ),
+      )),
     );
   }
 }
 
-Widget loginContainer(String option) => Padding(
+Widget loginContainer(String option, bool guest, BuildContext context) =>
+    Padding(
       padding: const EdgeInsets.all(9.0),
       child: Container(
         width: safeWidth * 0.75,
@@ -40,7 +42,11 @@ Widget loginContainer(String option) => Padding(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: Colors.white60),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            if (guest) {
+              Navigator.of(context).pushNamed("level");
+            }
+          },
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
